@@ -1,0 +1,31 @@
+﻿@model UmetnickaDelaProjekat1.Models.Korisnici
+
+<h2>Dodaj korisnika</h2>
+
+<form asp-action="DodajKorisnika" method="post">
+    <div class="mb-3">
+        <label>Ime</label>
+        <input asp-for="Ime" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Prezime</label>
+        <input asp-for="Prezime" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Lozinka</label>
+        <input asp-for="LozinkaHash" type="password" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Tip korisnika</label>
+        <select asp-for="TipKorisnika" class="form-control">
+            <option value="Kupac">Kupac</option>
+            <option value="Umetnik">Umetnik</option>
+            <option value="Administrator">Administrator</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Sačuvaj</button>
+</form>

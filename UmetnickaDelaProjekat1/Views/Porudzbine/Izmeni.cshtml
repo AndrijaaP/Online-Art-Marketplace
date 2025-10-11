@@ -1,0 +1,17 @@
+﻿@model UmetnickaDelaProjekat1.Models.Porudzbine
+
+<h2>Izmeni status porudžbine</h2>
+
+<form asp-action="Izmeni" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <label>Status:</label>
+    <select asp-for="Status">
+        <option>Obrada</option>
+        <option>Isporuka</option>
+        <option>Zavrseno</option>
+    </select>
+
+    <br /><br />
+    <button type="submit">Sačuvaj</button>
+</form>

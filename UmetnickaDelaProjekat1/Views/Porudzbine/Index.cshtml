@@ -1,0 +1,106 @@
+﻿<style>
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .title-wrapper {
+        font-weight: 700;
+        font-size: 1.75rem;
+    }
+
+    .buttons-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 210px;
+        margin-left: auto;
+    }
+
+    .buttons-row {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+        
+        .buttons-row.bottom-row {
+            margin-left: 35px; 
+        }
+
+    .btn-wide {
+        min-width: 160px;
+    }
+
+        .btn-wide.wide-extra {
+            min-width: 210px;
+        }
+</style>
+
+<div class="header-container mb-4">
+    <div class="title-wrapper">
+        <h2 class="mb-0">Sve porudžbine</h2>
+    </div>
+
+    <div class="buttons-wrapper">
+        <div class="buttons-row">
+            <a class="btn btn-success btn-wide" asp-controller="Izvestaj" asp-action="PoKategorijama">📄 Izveštaji o prodaji</a>
+            <a class="btn btn-info text-white btn-wide" asp-controller="Izvestaj" asp-action="AnalizaPrihoda">📊 Analiza prihoda</a>
+            <a class="btn btn-warning text-dark btn-wide" asp-action="Istorija">🕒 Istorija kupovine</a>
+        </div>
+        <div class="buttons-row bottom-row">
+            <a class="btn btn-dark btn-wide" asp-controller="Admin" asp-action="Korisnici">🧑 Upravljaj korisnicima</a>
+            <a class="btn btn-secondary btn-wide wide-extra" asp-controller="Admin" asp-action="Dela">🎨 Upravljaj umetničkim delima</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Korisnik</th>
+                <th>Datum</th>
+                <th>Status</th>
+                <th>Stavke</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var p in Model)
+            {
+                var statusBadge = p.Status switch
+                {
+                    "Zavrseno" => "success",
+                    "Isporuka" => "warning",
+                    _ => "secondary"
+                };
+
+                <tr>
+                    <td>@p.Korisnik.Ime @p.Korisnik.Prezime</td>
+                    <td>@(p.DatumPorudzbine?.ToString("dd.MM.yyyy") ?? "N/A")</td>
+                    <td>
+                        <span class="badge bg-@statusBadge">@p.Status</span>
+                    </td>
+                    <td class="text-start">
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var stavka in p.StavkePorudzbines)
+                            {
+                                <li>@stavka.UmetnickoDelo.Naziv – @stavka.Kolicina × @stavka.CenaPoJedinici RSD</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-sm btn-primary" asp-action="Izmeni" asp-route-id="@p.Id">Izmeni status</a>
+                            <form asp-action="Obrisi" asp-route-id="@p.Id" method="post" onsubmit="return confirm('Da li ste sigurni da želite da obrišete ovu porudžbinu?');">
+                                <button type="submit" class="btn btn-sm btn-danger">Obriši</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

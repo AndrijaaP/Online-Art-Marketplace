@@ -1,0 +1,29 @@
+﻿@model List<UmetnickaDelaProjekat1.Models.ProdajaIzvestaj>
+
+<h2>Izveštaji o prodaji</h2>
+
+<div class="mb-3">
+    <a class="btn btn-primary me-2" href="@Url.Action("PoKategorijama", "Izvestaj")">Po kategorijama</a>
+    <a class="btn btn-secondary" href="@Url.Action("PoUmetnicima", "Izvestaj")">Po umetnicima</a>
+</div>
+
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@ViewBag.NazivKolone</th>
+            <th>Ukupno prodatih dela</th>
+            <th>Ukupna zarada (RSD)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.Naziv</td>
+                    <td>@item.UkupnoProdatih</td>
+                    <td>@item.UkupnaZarada.ToString("N2")</td>
+                </tr>
+        }
+    </tbody>
+</table>

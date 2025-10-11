@@ -1,0 +1,84 @@
+﻿@model IEnumerable<UmetnickaDelaProjekat1.Models.Korisnici>
+
+@{
+    ViewData["Title"] = "Istorija porudžbina (admin)";
+}
+
+<h2 class="mb-4">Istorija kupovine za registrovane korisnike</h2>
+
+@foreach (var korisnik in Model)
+{
+    <div class="card mb-5 shadow-sm border-primary">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">@korisnik.Ime @korisnik.Prezime</h5>
+                <small>@korisnik.Email</small>
+            </div>
+            <span class="badge bg-primary fs-6">Korisnik ID: @korisnik.Id</span>
+        </div>
+
+        <div class="card-body">
+            @if (korisnik.Porudzbines.Any())
+            {
+                <div class="accordion" id="accordionKorisnik@korisnik.Id">
+                    @foreach (var p in korisnik.Porudzbines.OrderByDescending(p => p.DatumPorudzbine).ThenBy(p => p.Id))
+                    {
+                        var collapseId = $"collapseK{korisnik.Id}_P{p.Id}";
+                        var headingId = $"headingK{korisnik.Id}_P{p.Id}";
+                        var nazivDela = p.StavkePorudzbines.FirstOrDefault()?.UmetnickoDelo?.Naziv ?? $"Porudžbina #{p.Id}";
+
+                        <div class="accordion-item mb-3 shadow-sm rounded border">
+                            <h2 class="accordion-header" id="@headingId">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <span>
+                                            <strong>@nazivDela</strong> – @p.DatumPorudzbine?.ToString("dd.MM.yyyy")
+                                        </span>
+                                        <span class="badge bg-success align-self-center">Završeno</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headingId" data-bs-parent="#accordionKorisnik@korisnik.Id">
+                                <div class="accordion-body p-0">
+                                    <table class="table mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Naziv umetničkog dela</th>
+                                                <th class="text-end">Količina</th>
+                                                <th class="text-end">Cena po jedinici (RSD)</th>
+                                                <th class="text-end">Ukupno (RSD)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var stavka in p.StavkePorudzbines)
+                                            {
+                                                <tr>
+                                                    <td>@stavka.UmetnickoDelo.Naziv</td>
+                                                    <td class="text-end">@stavka.Kolicina</td>
+                                                    <td class="text-end">@stavka.CenaPoJedinici.ToString("N2")</td>
+                                                    <td class="text-end">@((stavka.Kolicina * stavka.CenaPoJedinici).ToString("N2"))</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot class="table-light">
+                                            <tr>
+                                                <th colspan="3" class="text-end">Ukupno za porudžbinu:</th>
+                                                <th class="text-end">
+                                                    @p.StavkePorudzbines.Sum(s => s.Kolicina * s.CenaPoJedinici).ToString("N2")
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted fst-italic">Korisnik nema završene porudžbine.</p>
+            }
+        </div>
+    </div>
+}

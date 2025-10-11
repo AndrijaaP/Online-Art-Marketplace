@@ -1,0 +1,40 @@
+﻿@model List<UmetnickaDelaProjekat1.Models.ProdajaIzvestaj>
+
+<h2 class="text-center my-4 text-primary-emphasis">
+    <i class="bi bi-graph-up-arrow text-primary"></i>
+    Analiza prihoda po mesecima
+</h2>
+
+<table class="table table-bordered table-hover text-center align-middle shadow">
+    <thead style="background-color: #e9f0f7;">
+        <tr class="text-primary fw-semibold">
+            <th>Mesec i godina</th>
+            <th>Ukupno prodatih dela</th>
+            <th>Ukupna zarada (RSD)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal ukupnaZarada = 0;
+            var maxZarada = Model.Max(x => x.UkupnaZarada);
+        }
+
+        @foreach (var item in Model)
+        {
+            ukupnaZarada += item.UkupnaZarada;
+            var isMax = item.UkupnaZarada == maxZarada;
+            var rowClass = isMax ? "table-info fw-bold" : "";
+            <tr class="@rowClass">
+                <td>@item.Naziv</td>
+                <td>@item.UkupnoProdatih</td>
+                <td>@item.UkupnaZarada.ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot style="background-color: #f8f9fa;">
+        <tr class="fw-bold text-dark">
+            <td colspan="2">Ukupna zarada</td>
+            <td>@ukupnaZarada.ToString("N2")</td>
+        </tr>
+    </tfoot>
+</table>

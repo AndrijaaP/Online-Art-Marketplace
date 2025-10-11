@@ -1,0 +1,35 @@
+﻿@model UmetnickaDelaProjekat1.Models.UmetnickaDela
+
+<h2>Dodaj umetničko delo</h2>
+
+<form asp-action="DodajDelo" method="post">
+    <div class="mb-3">
+        <label>Naziv</label>
+        <input asp-for="Naziv" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Opis</label>
+        <textarea asp-for="Opis" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label>Umetnik</label>
+        <input asp-for="Umetnik" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Kategorija</label>
+        <input asp-for="Kategorija" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Cena (RSD)</label>
+        <input asp-for="Cena" class="form-control" type="number" step="0.01" />
+    </div>
+    <div class="mb-3">
+        <label>Fotografija (putanja)</label>
+        <input asp-for="Fotografija" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Dostupnost</label>
+        <input asp-for="Dostupnost" type="checkbox" />
+    </div>
+    <button type="submit" class="btn btn-success">Sačuvaj</button>
+</form>

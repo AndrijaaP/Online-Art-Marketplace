@@ -1,0 +1,71 @@
+﻿@model IEnumerable<UmetnickaDelaProjekat1.Models.UmetnickaDela>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Umetnička Dela</h2>
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="row">
+        <div class="col-md-3 mb-2">
+            <input type="text" name="Kategorija" class="form-control" placeholder="Kategorija" />
+        </div>
+        <div class="col-md-3 mb-2">
+            <input type="text" name="Umetnik" class="form-control" placeholder="Umetnik" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <input type="number" name="CenaMin" class="form-control" placeholder="Cena od" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <input type="number" name="CenaMax" class="form-control" placeholder="Cena do" />
+        </div>
+        <div class="col-md-2 mb-2">
+            <select name="Dostupnost" class="form-control">
+                <option value="">-- Dostupnost --</option>
+                <option value="true">Dostupno</option>
+                <option value="false">Nedostupno</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Filtriraj</button>
+            <a asp-action="Index" class="btn btn-secondary">Poništi filtere</a>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Umetnik</th>
+            <th>Kategorija</th>
+            <th>Cena</th>
+            <th>Dostupnost</th>
+            <th>Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var delo in Model)
+        {
+            <tr>
+                <td>@delo.Naziv</td>
+                <td>@delo.Umetnik</td>
+                <td>@delo.Kategorija</td>
+                <td>@delo.Cena</td>
+                <td>@(delo.Dostupnost ? "Dostupno" : "Nedostupno")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@delo.Id" class="btn btn-warning me-2">
+                        <i class="bi bi-pencil-square"></i> Izmeni
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@delo.Id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Obriši
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Dodaj novo delo</a>

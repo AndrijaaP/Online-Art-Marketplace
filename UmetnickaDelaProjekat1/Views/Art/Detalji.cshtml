@@ -1,0 +1,44 @@
+﻿@model UmetnickaDelaProjekat1.Models.UmetnickaDela
+
+<h2 class="mb-4 text-primary">
+    <i class="bi bi-info-circle-fill me-2"></i>Detalji o delu
+</h2>
+
+<div class="card shadow border-info mb-5 rounded-4 mx-auto" style="max-width: 900px;">
+    <div class="row g-0 align-items-center">
+        <div class="col-md-4">
+            <img src="@Model.Fotografija" class="img-fluid rounded-start" alt="slika umetničkog dela" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h4 class="card-title text-info fw-bold">
+                    <i class="bi bi-easel2-fill me-2"></i>@Model.Naziv
+                </h4>
+
+                <p class="card-text">@Model.Opis</p>
+
+                <p class="card-text mt-2">
+                    <span class="fw-semibold">
+                        <i class="bi bi-tags-fill me-2 text-muted"></i>Kategorija:
+                        <span class="text-secondary">@Model.Kategorija</span>
+                    </span>
+                </p>
+
+                <p class="card-text">
+                    <span class="fw-bold text-success fs-5">
+                        <i class="bi bi-currency-exchange me-2"></i>@Model.Cena RSD
+                    </span>
+                </p>
+
+                <div class="mt-4 d-flex justify-content-start">
+                    <a asp-controller="Korpa" asp-action="Dodaj" asp-route-id="@Model.Id"
+                       class="btn btn-success btn-lg rounded-pill"
+                       style="padding: 0.4rem 1.1rem; font-size: 1rem;">
+                        <i class="bi bi-cart-plus-fill me-2"></i>Dodaj u korpu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

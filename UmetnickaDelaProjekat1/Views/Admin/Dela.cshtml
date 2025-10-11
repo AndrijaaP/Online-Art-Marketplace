@@ -1,0 +1,48 @@
+﻿@model IEnumerable<UmetnickaDelaProjekat1.Models.UmetnickaDela>
+
+<div class="container-fluid px-3">
+    <h2 class="mb-3">Upravljanje umetničkim delima</h2>
+    <a class="btn btn-primary mb-3" asp-action="DodajDelo">Dodaj novo delo</a>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Naziv</th>
+                    <th>Opis</th>
+                    <th>Umetnik</th>
+                    <th>Kategorija</th>
+                    <th>Cena (RSD)</th>
+                    <th>Dostupno</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr>
+                        <td>@d.Naziv</td>
+                        <td class="text-truncate" style="max-width: 250px;">@d.Opis</td>
+                        <td>@d.Umetnik</td>
+                        <td>@d.Kategorija</td>
+                        <td>@d.Cena.ToString("N2")</td>
+                        <td>
+                            @if (d.Dostupnost)
+                            {
+                                <span class="badge bg-success">Da</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Ne</span>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-warning me-1 mb-1" asp-action="IzmeniDelo" asp-route-id="@d.Id">Izmeni</a>
+                            <a class="btn btn-sm btn-danger mb-1" asp-action="ObrisiDelo" asp-route-id="@d.Id">Obriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

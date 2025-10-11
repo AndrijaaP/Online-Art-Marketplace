@@ -1,0 +1,48 @@
+﻿@model IEnumerable<UmetnickaDelaProjekat1.Models.StavkePorudzbine>
+
+<h2>
+    <i class="bi bi-cart4 me-2"></i>Moja korpa
+</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Korpa je prazna.</p>
+}
+else
+{
+    <div class="card shadow-sm border-primary rounded-4" style="max-width: 900px;">
+        <div class="card-body">
+            <table class="table table-hover table-bordered align-middle mb-4">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Delo</th>
+                        <th style="width: 100px;">Količina</th>
+                        <th style="width: 120px;">Cena po jedinici</th>
+                        <th style="width: 120px;">Ukupno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var stavka in Model)
+                    {
+                        <tr>
+                            <td>@stavka.UmetnickoDelo.Naziv</td>
+                            <td>@stavka.Kolicina</td>
+                            <td>@stavka.CenaPoJedinici RSD</td>
+                            <td>@(stavka.Kolicina * stavka.CenaPoJedinici) RSD</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h5 class="text-end fw-bold mb-4">
+                Ukupno: @Model.Sum(s => s.Kolicina * s.CenaPoJedinici) RSD
+            </h5>
+
+            <form asp-action="Kupi" method="post" class="text-end">
+                <button type="submit" class="btn btn-success btn-lg rounded-pill px-4">
+                    <i class="bi bi-credit-card me-2"></i>Završi kupovinu
+                </button>
+            </form>
+        </div>
+    </div>
+}

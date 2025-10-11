@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UmetnickaDelaProjekat1.Models.UmetnickaDela>
+
+<h2>Katalog umetničkih dela</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var delo in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg border-primary h-100 rounded-4">
+                    <div class="row g-0 h-100">
+                        <div class="col-5">
+                            <img src="@delo.Fotografija"
+                                 class="img-fluid rounded-start h-100"
+                                 alt="slika"
+                                 style="object-fit: cover; width: 100%; height: 100%;" />
+                        </div>
+                        <div class="col-7 d-flex align-items-center">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold">
+                                    <i class="bi bi-easel2-fill me-2"></i>@delo.Naziv
+                                </h5>
+                                <p class="card-text">@delo.Opis</p>
+                                <p class="card-text">
+                                    <span class="fw-semibold text-success">
+                                        <i class="bi bi-currency-exchange me-1"></i>Cena: @delo.Cena RSD
+                                    </span>
+                                </p>
+                                <div class="d-flex gap-3 mt-4">
+                                    <a asp-controller="Art" asp-action="Detalji" asp-route-id="@delo.Id"
+                                       class="btn btn-primary btn-lg rounded-pill"
+                                       style="padding: 0.4rem 1.1rem; font-size: 1rem;">
+                                        <i class="bi bi-info-circle-fill me-2"></i>Detalji
+                                    </a>
+                                    <a asp-controller="Korpa" asp-action="Pregled"
+                                       class="btn btn-success btn-lg rounded-pill"
+                                       style="padding: 0.4rem 1.1rem; font-size: 1rem;">
+                                        <i class="bi bi-cart4 me-2"></i>Moja korpa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
